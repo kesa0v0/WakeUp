@@ -1,5 +1,6 @@
 package com.kesa.wakeup
 
+import android.os.AsyncTask
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -17,11 +18,20 @@ class MainActivity : AppCompatActivity() {
 
         val turnOnBtm = findViewById<Button>(R.id.recordOn)
         turnOnBtm.setOnClickListener{
-            onRecord()
+            DoAsync {
+                onRecord()
+            }
         }
     }
 
     private fun onRecord(){
         var movement = listOf<Int>()
+    }
+}
+
+class DoAsync(val handler: () -> Unit) : AsyncTask<Void, Void, Void>() {    // 비동기
+    override fun doInBackground(vararg params: Void?): Void? {
+        handler()
+        return null
     }
 }
